@@ -23,7 +23,7 @@ public class Card : MonoBehaviour, IInteractableCards
         faceUp = false;
     }
 
-    IEnumerator RotateCard()
+    IEnumerator FlipCard()
     {
         allowCoroutine = false;
         for (float i = 0; i <= 180f; i+= 10f)
@@ -47,7 +47,7 @@ public class Card : MonoBehaviour, IInteractableCards
     {
         if (allowCoroutine)
         {
-            StartCoroutine(RotateCard());
+            StartCoroutine(FlipCard());
         }
     }
 }

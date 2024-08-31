@@ -11,9 +11,8 @@ public class LevelSelector : MonoBehaviour
     public void Easy() { gridY = 3; }
 
     public void Medium() { gridY = 4; }
-    
 
-    public void High() { gridY = 5; }
+    public void Hard() { gridY = 5; }
 
     public void DisableCanvas()
     {
