@@ -8,7 +8,6 @@ public class Grid : MonoBehaviour
 
     GameObject[] tilesInLevel;
     List<Sprite> tileImages = new List<Sprite>();
-    int tileX, tileY;
     float currentPositionX, currentPositionY;
 
     private void Start()
@@ -16,10 +15,6 @@ public class Grid : MonoBehaviour
         object[] loadedImages = Resources.LoadAll("TileImages", typeof(Sprite));
         for (int i = 0; i < loadedImages.Length; i++)
             tileImages.Add((Sprite)loadedImages[i]);
-        currentPositionX = transform.position.x;
-        currentPositionY = transform.position.y;
-        //ShuffleTiles();
-        //CreateTileLayout(LevelSelector.gridY);
     }
 
     void ShuffleTiles()
@@ -43,11 +38,10 @@ public class Grid : MonoBehaviour
         {
             for (int x = 0; x < 4; x++)
             {
-                int i = x + z * gridSize;
-                Vector3 position = new Vector3(currentPositionX + x * 2, currentPositionY + z * 2, 0f);
+                int i = x + z * (gridSize - 1);
+                Vector3 position = transform.position + new Vector3(x * 1.5f, z * 1.5f, 0f);
                 tilesInLevel[i] = Instantiate(tilePrefab, position, Quaternion.identity);
             }
         }
-
     }
 }

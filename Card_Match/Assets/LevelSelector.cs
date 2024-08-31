@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
 {
-    public int gridY;
+    [HideInInspector] public int gridY;
     public GameObject startScreenCanvas;
     [SerializeField] Grid grid;
 
-    public void Easy() { gridY = 4; }
+    public void Easy() { gridY = 3; }
 
-    public void Medium() { gridY = 5; }
+    public void Medium() { gridY = 4; }
     
 
-    public void High() { gridY = 6; }
+    public void High() { gridY = 5; }
 
     public void DisableCanvas()
     {
