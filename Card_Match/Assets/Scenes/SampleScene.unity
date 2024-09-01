@@ -462,7 +462,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &483786658
 PrefabInstance:
@@ -481,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8653237370731258625, guid: 45f8a36d6ea6ed640bf66e860632e957, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8653237370731258625, guid: 45f8a36d6ea6ed640bf66e860632e957, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16860752, g: 0.5566038, b: 0.0560104, a: 0.80784315}
+  m_Color: {r: 0.9245283, g: 0.38912705, b: 0.19769777, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1477,6 +1477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7846d4dbc7fed64a91021c5ed749fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightedColor: {r: 0.3797008, g: 0.8207547, b: 0.35359553, a: 0.36078432}
 --- !u!1 &2017165466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1575,7 @@ RectTransform:
   - {fileID: 750446352}
   - {fileID: 1397284878}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

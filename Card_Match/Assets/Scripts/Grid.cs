@@ -49,9 +49,6 @@ public class Grid : MonoBehaviour
 
     void AssignCardValues(int cardsNeeded)
     {
-        //cardsInLevel.AddRange(Enumerable.Repeat(cardBase, cardsNeeded / 2));
-
-
         for (int a = 0; a < cardsNeeded/2; a++)
         {
             cardsInLevel.Add(Instantiate(cardBase, transform.position, Quaternion.identity));

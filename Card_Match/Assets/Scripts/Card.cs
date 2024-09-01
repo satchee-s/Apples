@@ -7,14 +7,12 @@ public class Card : MonoBehaviour, IInteractableCards
 {
     //public bool hasBeenFound;
     public Sprite cardBack;
-
     public Sprite cardImage;
     public string cardName;
 
-
     bool allowCoroutine;
     bool faceUp;
-    SpriteRenderer render;
+    [HideInInspector] public SpriteRenderer render;
 
     private void Start()
     {
