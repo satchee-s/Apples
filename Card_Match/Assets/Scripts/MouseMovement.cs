@@ -8,7 +8,7 @@ public class MouseMovement : MonoBehaviour
     RaycastHit hit;
     string currentCardName;
     Card currentCard;
-    private void Update()
+    /*private void Update()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0))
@@ -37,5 +37,5 @@ public class MouseMovement : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }

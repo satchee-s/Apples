@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Card : MonoBehaviour, IInteractableCards
 {
-    public bool hasBeenFound;
-    public Sprite cardImage;
+    //public bool hasBeenFound;
     public Sprite cardBack;
 
-    [HideInInspector] public string cardName;
+    public Sprite cardImage;
+    public string cardName;
+
 
     bool allowCoroutine;
     bool faceUp;
@@ -22,7 +23,6 @@ public class Card : MonoBehaviour, IInteractableCards
         allowCoroutine = true;
         faceUp = false;
     }
-
     IEnumerator FlipCard()
     {
         allowCoroutine = false;
@@ -31,11 +31,7 @@ public class Card : MonoBehaviour, IInteractableCards
             transform.rotation = Quaternion.Euler(0f, i, 0f);
             if (i == 90f)
             {
-                if (faceUp)
-                    render.sprite = cardBack;
-                else 
-                    render.sprite = cardImage;
-
+                render.sprite = faceUp ? cardBack : cardImage;
                 yield return new WaitForSeconds(0.01f);
             }
         }

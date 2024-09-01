@@ -1,38 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
     [SerializeField] GameObject tilePrefab;
+    [SerializeField] GameObject cardBase;
 
-    GameObject[] tilesInLevel;
+    List<GameObject> tilesInLevel = new List<GameObject>();
+    List<GameObject> cardsInLevel = new List<GameObject>();
     List<Sprite> cardFrontImages = new List<Sprite>();
-    List<Card> cardsInLevel = new List<Card>();
 
     private void Start()
     {
         object[] loadedImages = Resources.LoadAll("TileImages", typeof(Sprite));
         for (int i = 0; i < loadedImages.Length; i++)
             cardFrontImages.Add((Sprite)loadedImages[i]);
+        ShuffleCardOrder(tilesInLevel.Count);
     }
 
-    public void CreateTileLayout(int gridSize) //position on which cards will be placed
+    public void CreateTileLayout(int gridSize) 
     {
-        tilesInLevel = new GameObject[gridSize * 4];
+        //tilesInLevel = new GameObject[gridSize * 4];
         for (int z = 0; z < gridSize; z++)
         {
             for (int x = 0; x < 4; x++)
             {
                 int i = x + (z * (gridSize - 1));
                 Vector3 position = transform.position + new Vector3(x * 1.5f, z * 1.5f, 0f);
-                tilesInLevel[i] = Instantiate(tilePrefab, position, Quaternion.identity);
+                tilesInLevel.Add( Instantiate(tilePrefab, position, Quaternion.identity));
             }
         }
-        //GenerateCards(tilesInLevel.Length);
+        AssignCardValues(tilesInLevel.Count);
     }
 
-    void GenerateCards(int cardsNeeded)
+    void ShuffleCardOrder(int cardsNeeded)
     {
         for (int j = 0; j < cardFrontImages.Count; j++)
         {
@@ -41,22 +45,30 @@ public class Grid : MonoBehaviour
             cardFrontImages[j] = cardFrontImages[k];
             cardFrontImages[k] = temp;
         }
+    }
 
-        for (int a = 0; a < cardsNeeded / 2; a++)
+    void AssignCardValues(int cardsNeeded)
+    {
+        //cardsInLevel.AddRange(Enumerable.Repeat(cardBase, cardsNeeded / 2));
+
+
+        for (int a = 0; a < cardsNeeded/2; a++)
         {
-            Card newCard = new Card();
-            newCard.cardImage = cardFrontImages[a];
-            newCard.cardName = cardFrontImages[a].name;
-            cardsInLevel.Add(newCard);
+            cardsInLevel.Add(Instantiate(cardBase, transform.position, Quaternion.identity));
+            cardsInLevel[a].GetComponent<Card>().cardImage = cardFrontImages[a];
+            cardsInLevel[a].GetComponent<Card>().cardName = cardFrontImages[a].name;
         }
 
-        cardsInLevel.AddRange(cardsInLevel);
-
-        for (int b = 0; b < cardsNeeded; b++)
+        for (int a = 0; a < cardsNeeded/2; a++)
         {
-            int k = Random.Range(b, cardsInLevel.Count);
-            Card temp = cardsInLevel[b];
-            cardsInLevel[b] = cardsInLevel[k];
+            cardsInLevel.Add(Instantiate(cardsInLevel[a]));
+        }
+
+        for (int c = 0; c < cardsInLevel.Count; c++)
+        {
+            int k = Random.Range(c, cardsInLevel.Count);
+            GameObject temp = cardsInLevel[c];
+            cardsInLevel[c] = cardsInLevel[k];
             cardsInLevel[k] = temp;
         }
         PlaceCardsOnScreen(cardsNeeded);
@@ -67,7 +79,7 @@ public class Grid : MonoBehaviour
         for (int i = 0; i < numberOfCards; i++) 
         {
             Vector3 pos = tilesInLevel[i].transform.position;
-            Instantiate(cardsInLevel[i], pos, Quaternion.identity);
+            cardsInLevel[i].transform.position = pos;
         }
     }
 }
