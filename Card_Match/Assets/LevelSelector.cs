@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
 {
-    [HideInInspector] public int gridY;
+    [HideInInspector] public static int gridY;
     public GameObject startScreenCanvas;
     [SerializeField] Grid grid;
 

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -10,8 +13,11 @@ public class MouseMovement : MonoBehaviour
     Card pressedCard;
     Card pressedCard2;
     bool firstCardPressed;
+    int score;
 
     [SerializeField] Color highlightedColor;
+    [SerializeField] TMP_Text scoreText;
+    [SerializeField] GameObject endGame;
 
     private void Update()
     {
@@ -33,10 +39,15 @@ public class MouseMovement : MonoBehaviour
                     pressedCard.Interact();
                     pressedCard2.Interact();
                     pressedCard.render.color = Color.white;
-                    StartCoroutine(WaitUntilChecking());
                     firstCardPressed = false;
+                    StartCoroutine(WaitUntilChecking());
                 }
             }
+        }
+
+        if (score == (LevelSelector.gridY * 4) && score > 0)
+        {
+            endGame.SetActive(true);
         }
     }
 
@@ -54,7 +65,9 @@ public class MouseMovement : MonoBehaviour
             pressedCard.gameObject.SetActive(false);
             pressedCard2.gameObject.SetActive(false);
             pressedCard = null;
-            pressedCard2 = null;            
+            pressedCard2 = null;
+            score += 2;
+            scoreText.text = score.ToString();
         }
     }
 }
