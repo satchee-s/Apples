@@ -19,7 +19,6 @@ public class MouseMovement : MonoBehaviour
     [SerializeField] AudioClip cardFlip;
     [SerializeField] AudioClip rightMatch;
     [SerializeField] AudioClip wrongMatch;
-    [SerializeField] AudioClip winGame;
 
     private void Update()
     {
@@ -50,7 +49,6 @@ public class MouseMovement : MonoBehaviour
 
         if (score == (Grid.cardsInLevel.Count) && score > 0)
         {
-            //PlayAudio(winGame);
             endGame.SetActive(true);
         }
     }

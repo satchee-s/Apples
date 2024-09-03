@@ -3110,7 +3110,6 @@ MonoBehaviour:
   cardFlip: {fileID: 8300000, guid: 6ac57d3b707436b42a874de74408ca67, type: 3}
   rightMatch: {fileID: 8300000, guid: 225652cd72845e041bfa3c90f7d767b1, type: 3}
   wrongMatch: {fileID: 8300000, guid: 36d53f828e2461a4dbf3ad22d438a397, type: 3}
-  winGame: {fileID: 8300000, guid: 225652cd72845e041bfa3c90f7d767b1, type: 3}
 --- !u!114 &1898299854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3489,6 +3488,7 @@ GameObject:
   - component: {fileID: 2106475810}
   - component: {fileID: 2106475809}
   - component: {fileID: 2106475808}
+  - component: {fileID: 2106475812}
   m_Layer: 5
   m_Name: WinGameScreen
   m_TagString: Untagged
@@ -3579,3 +3579,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2106475812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106475807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5df9afc2dab9d4d800a679263963ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 1898299856}
+  clip: {fileID: 8300000, guid: 58ff971e95a485d4fbb6c4e426986035, type: 3}
