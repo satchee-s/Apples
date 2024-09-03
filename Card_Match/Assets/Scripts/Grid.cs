@@ -10,7 +10,7 @@ public class Grid : MonoBehaviour
     [SerializeField] GameObject cardBase;
 
     List<GameObject> tilesInLevel = new List<GameObject>();
-    List<GameObject> cardsInLevel = new List<GameObject>();
+    [HideInInspector] public static List<GameObject> cardsInLevel = new List<GameObject>();
     List<Sprite> cardFrontImages = new List<Sprite>();
 
     private void Start()
@@ -18,7 +18,7 @@ public class Grid : MonoBehaviour
         object[] loadedImages = Resources.LoadAll("TileImages", typeof(Sprite));
         for (int i = 0; i < loadedImages.Length; i++)
             cardFrontImages.Add((Sprite)loadedImages[i]);
-        ShuffleCardOrder(tilesInLevel.Count);
+        //ShuffleCardOrder(tilesInLevel.Count);
     }
 
     public void CreateTileLayout(int gridSize) 
@@ -33,10 +33,10 @@ public class Grid : MonoBehaviour
                 tilesInLevel.Add( Instantiate(tilePrefab, position, Quaternion.identity));
             }
         }
-        AssignCardValues(tilesInLevel.Count);
+        //AssignCardValues(tilesInLevel.Count);
     }
 
-    void ShuffleCardOrder(int cardsNeeded)
+    void ShuffleCardOrder()
     {
         for (int j = 0; j < cardFrontImages.Count; j++)
         {
@@ -47,8 +47,9 @@ public class Grid : MonoBehaviour
         }
     }
 
-    void AssignCardValues(int cardsNeeded)
+    public void AssignCardValues(int cardsNeeded)
     {
+        ShuffleCardOrder();
         for (int a = 0; a < cardsNeeded/2; a++)
         {
             cardsInLevel.Add(Instantiate(cardBase, transform.position, Quaternion.identity));
@@ -68,15 +69,33 @@ public class Grid : MonoBehaviour
             cardsInLevel[c] = cardsInLevel[k];
             cardsInLevel[k] = temp;
         }
-        PlaceCardsOnScreen(cardsNeeded);
+        //PlaceCardsOnScreen(cardsNeeded);
     }
 
-    void PlaceCardsOnScreen(int numberOfCards)
+    public void PlaceCardsOnScreen(int numberOfCards)
     {
-        for (int i = 0; i < numberOfCards; i++) 
+        for (int i = 0; i < numberOfCards; i++)
         {
             Vector3 pos = tilesInLevel[i].transform.position;
             cardsInLevel[i].transform.position = pos;
+        }
+    }
+
+    public void GenerateCardsFromLoadedData(List<string> nameOfImages)
+    {
+        for(int i = 0; i < nameOfImages.Count; i++)
+        {
+            for (int j = 0; j < cardFrontImages.Count; j ++)
+            {
+                if (nameOfImages[i] == cardFrontImages[j].name)
+                {
+                    cardsInLevel.Add(Instantiate(cardBase, transform.position, Quaternion.identity));
+                    cardsInLevel[i].GetComponent<Card>().cardImage = cardFrontImages[j];
+                    cardsInLevel[i].GetComponent<Card>().cardName = cardFrontImages[j].name;
+                    break;
+                }
+            }
+            
         }
     }
 }

@@ -17,7 +17,8 @@ public class LevelSelector : MonoBehaviour
     public void DisableCanvas()
     {
         grid.CreateTileLayout(gridY);
+        grid.AssignCardValues(gridY * 4);
+        grid.PlaceCardsOnScreen(gridY * 4); ;
         startScreenCanvas.SetActive(false);
     }
-
 }

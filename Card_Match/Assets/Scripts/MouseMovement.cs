@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -15,7 +13,6 @@ public class MouseMovement : MonoBehaviour
     bool firstCardPressed;
     int score;
 
-    [SerializeField] Color highlightedColor;
     [SerializeField] TMP_Text scoreText;
     [SerializeField] GameObject endGame;
 
@@ -30,22 +27,21 @@ public class MouseMovement : MonoBehaviour
                 if (!firstCardPressed)
                 {
                     pressedCard = hit.collider.GetComponent<Card>();
-                    pressedCard.render.color = highlightedColor;
+                    pressedCard.Interact();
                     firstCardPressed = true;
+
                 }
                 else
                 {
                     pressedCard2 = hit.collider.GetComponent<Card>();
-                    pressedCard.Interact();
                     pressedCard2.Interact();
-                    pressedCard.render.color = Color.white;
                     firstCardPressed = false;
                     StartCoroutine(WaitUntilChecking());
                 }
             }
         }
 
-        if (score == (LevelSelector.gridY * 4) && score > 0)
+        if (score == (Grid.cardsInLevel.Count) && score > 0)
         {
             endGame.SetActive(true);
         }
@@ -53,7 +49,7 @@ public class MouseMovement : MonoBehaviour
 
     IEnumerator WaitUntilChecking()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
         if (pressedCard.cardName != pressedCard2.cardName)
         {
             pressedCard.Interact();
