@@ -15,6 +15,11 @@ public class MouseMovement : MonoBehaviour
 
     [SerializeField] TMP_Text scoreText;
     [SerializeField] GameObject endGame;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip cardFlip;
+    [SerializeField] AudioClip rightMatch;
+    [SerializeField] AudioClip wrongMatch;
+    [SerializeField] AudioClip winGame;
 
     private void Update()
     {
@@ -29,6 +34,7 @@ public class MouseMovement : MonoBehaviour
                     pressedCard = hit.collider.GetComponent<Card>();
                     pressedCard.Interact();
                     firstCardPressed = true;
+                    PlayAudio(cardFlip);
 
                 }
                 else
@@ -37,12 +43,14 @@ public class MouseMovement : MonoBehaviour
                     pressedCard2.Interact();
                     firstCardPressed = false;
                     StartCoroutine(WaitUntilChecking());
+                    PlayAudio(cardFlip);
                 }
             }
         }
 
         if (score == (Grid.cardsInLevel.Count) && score > 0)
         {
+            //PlayAudio(winGame);
             endGame.SetActive(true);
         }
     }
@@ -54,6 +62,7 @@ public class MouseMovement : MonoBehaviour
         {
             pressedCard.Interact();
             pressedCard2.Interact();
+            PlayAudio(wrongMatch);
             yield break;
         }
         else if (pressedCard.cardName == pressedCard2.cardName)
@@ -64,6 +73,13 @@ public class MouseMovement : MonoBehaviour
             pressedCard2 = null;
             score += 2;
             scoreText.text = score.ToString();
+            PlayAudio(rightMatch);
         }
+    }
+
+    void PlayAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

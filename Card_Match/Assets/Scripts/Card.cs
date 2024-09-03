@@ -12,6 +12,7 @@ public class Card : MonoBehaviour, IInteractableCards
 
     bool allowCoroutine;
     bool faceUp;
+
     [HideInInspector] public SpriteRenderer render;
 
     private void Start()

@@ -14,6 +14,8 @@ public class SaveAndLoad : MonoBehaviour
     [SerializeField] private SerializableList<string> cardsNotFound;
     [SerializeField] Grid grid;
     [SerializeField] GameObject canvas;
+    [SerializeField] GameObject loadingWarning;
+
     string saveFilePath;
     int gridDimensions;
 
@@ -45,7 +47,7 @@ public class SaveAndLoad : MonoBehaviour
         }
         else
         {
-            Debug.Log("No save file found");
+            StartCoroutine(ShowLoadingPopUp());
         }
     }
 
@@ -60,5 +62,12 @@ public class SaveAndLoad : MonoBehaviour
         grid.GenerateCardsFromLoadedData(cardsNotFound.list);
         grid.PlaceCardsOnScreen(cardsNotFound.list.Count);
         canvas.SetActive(false);
+    }
+
+    IEnumerator ShowLoadingPopUp()
+    {
+        loadingWarning.SetActive(true);
+        yield return new WaitForSeconds(2);
+        loadingWarning.SetActive(false);
     }
 }
