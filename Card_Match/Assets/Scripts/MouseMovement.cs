@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MouseMovement : MonoBehaviour
@@ -12,6 +10,7 @@ public class MouseMovement : MonoBehaviour
     Card pressedCard2;
     bool firstCardPressed;
     int score;
+    RuntimePlatform platform;
 
     [SerializeField] TMP_Text scoreText;
     [SerializeField] GameObject endGame;
@@ -20,30 +19,28 @@ public class MouseMovement : MonoBehaviour
     [SerializeField] AudioClip rightMatch;
     [SerializeField] AudioClip wrongMatch;
 
+    private void Start()
+    {
+        platform = Application.platform;
+    }
+
     private void Update()
     {
-        ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
+        if (platform == RuntimePlatform.Android)
         {
-            hit = Physics2D.Raycast(ray, Vector2.zero);
-            if (hit.collider.GetComponent<Card>() != null)
+            if (Input.touchCount > 0 && Input.touchCount < 2)
             {
-                if (!firstCardPressed)
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    pressedCard = hit.collider.GetComponent<Card>();
-                    pressedCard.Interact();
-                    firstCardPressed = true;
-                    PlayAudio(cardFlip);
-
+                    checkTouch(Input.GetTouch(0).position);
                 }
-                else
-                {
-                    pressedCard2 = hit.collider.GetComponent<Card>();
-                    pressedCard2.Interact();
-                    firstCardPressed = false;
-                    StartCoroutine(WaitUntilChecking());
-                    PlayAudio(cardFlip);
-                }
+            }
+        }
+        else if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                checkTouch(Input.mousePosition);
             }
         }
 
@@ -79,5 +76,35 @@ public class MouseMovement : MonoBehaviour
     {
         audioSource.clip = clip;
         audioSource.Play();
+    }
+
+    private void checkTouch(Vector3 pos)
+    {
+        ray = Camera.main.ScreenToWorldPoint(pos);
+        hit = Physics2D.Raycast(ray, Vector2.zero);
+        if (hit.collider.GetComponent<Card>() != null)
+        {
+            CheckIfCardsPressed();
+
+        }
+    }
+
+    void CheckIfCardsPressed()
+    {
+        if (!firstCardPressed)
+        {
+            pressedCard = hit.collider.GetComponent<Card>();
+            pressedCard.Interact();
+            firstCardPressed = true;
+            PlayAudio(cardFlip);
+        }
+        else
+        {
+            pressedCard2 = hit.collider.GetComponent<Card>();
+            pressedCard2.Interact();
+            firstCardPressed = false;
+            StartCoroutine(WaitUntilChecking());
+            PlayAudio(cardFlip);
+        }
     }
 }
