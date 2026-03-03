@@ -8,6 +8,7 @@ public class Grid : MonoBehaviour
 {
     [SerializeField] GameObject tilePrefab;
     [SerializeField] GameObject cardBase;
+    [SerializeField] Vector3 offset;
 
     List<GameObject> tilesInLevel = new List<GameObject>();
     [HideInInspector] public static List<GameObject> cardsInLevel = new List<GameObject>();
@@ -29,7 +30,7 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < 4; x++)
             {
                 int i = x + (z * (gridSize - 1));
-                Vector3 position = transform.position + new Vector3(x * 1.5f, z * 1.5f, 0f);
+                Vector3 position = transform.position + new Vector3(x * 1.5f, z * 1.5f, 0f) + offset;
                 tilesInLevel.Add( Instantiate(tilePrefab, position, Quaternion.identity));
             }
         }
@@ -52,7 +53,7 @@ public class Grid : MonoBehaviour
         ShuffleCardOrder();
         for (int a = 0; a < cardsNeeded/2; a++)
         {
-            cardsInLevel.Add(Instantiate(cardBase, transform.position, Quaternion.identity));
+            cardsInLevel.Add(Instantiate(cardBase, (transform.position), Quaternion.identity));
             cardsInLevel[a].GetComponent<Card>().cardImage = cardFrontImages[a];
             cardsInLevel[a].GetComponent<Card>().cardName = cardFrontImages[a].name;
         }
